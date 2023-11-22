@@ -211,6 +211,9 @@ class Session
 	    }
 
         $userIpAddress = self::getClientIp();
+		if (preg_match('/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/', $userIpAddress, $ip_match)) {
+			$userIpAddress = $ip_match[0];
+		}
 
 	if(!(isset($_GET['page']) && $_GET['page']=="raport" && isset($_GET['raport']) && count($_GET)==2 && MODE === 'INGAME')) {
 		$sql	= 'REPLACE INTO %%SESSION%% SET
