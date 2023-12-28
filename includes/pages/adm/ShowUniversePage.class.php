@@ -100,9 +100,6 @@ class ShowUniversePage extends AbstractAdminPage
 			'max_fleets_per_acs'			=> $config->max_fleets_per_acs,
 			'vmode_min_time'				=> $config->vmode_min_time,
 			'gate_wait_time'				=> $config->gate_wait_time,
-			'metal_start'					=> $config->metal_start,
-			'crystal_start'					=> $config->crystal_start,
-			'deuterium_start'				=> $config->deuterium_start,
 			'darkmatter_start'				=> $config->darkmatter_start,
 			'debris_moon'					=> $config->debris_moon,
 			'deuterium_cost_galaxy'			=> $config->deuterium_cost_galaxy,
@@ -116,7 +113,9 @@ class ShowUniversePage extends AbstractAdminPage
 			'show_unlearned_ships' => $config->show_unlearned_ships,
 			'show_unlearned_buildings' => $config->show_unlearned_buildings,
 			'show_unlearned_technology' => $config->show_unlearned_technology,
-			'user_max_notes' => $config->user_max_notes
+			'user_max_notes' => $config->user_max_notes,
+			'show_ships_no_shipyard' => $config->show_ships_no_shipyard,
+			'show_tech_no_research' => $config->show_tech_no_research,
 		));
 
 		$this->display('page.universe.default.tpl');
@@ -181,9 +180,6 @@ class ShowUniversePage extends AbstractAdminPage
 				'max_fleets_per_acs'	=> $config->max_fleets_per_acs,
 				'vmode_min_time'		=> $config->vmode_min_time,
 				'gate_wait_time'		=> $config->gate_wait_time,
-				'metal_start'			=> $config->metal_start,
-				'crystal_start'			=> $config->crystal_start,
-				'deuterium_start'		=> $config->deuterium_start,
 				'darkmatter_start'		=> $config->darkmatter_start,
 				'debris_moon'			=> $config->debris_moon,
 				'deuterium_cost_galaxy'	=> $config->deuterium_cost_galaxy,
@@ -199,6 +195,8 @@ class ShowUniversePage extends AbstractAdminPage
 				'show_unlearned_buildings' => $config->show_unlearned_buildings,
 				'show_unlearned_technology' => $config->show_unlearned_technology,
 				'user_max_notes' => $config->user_max_notes,
+				'show_ships_no_shipyard' => $config->show_ships_no_shipyard,
+				'show_tech_no_research' => $config->show_tech_no_research,
 			);
 
 			$game_disable			= isset($_POST['closed']) && $_POST['closed'] == 'on' ? 1 : 0;
@@ -252,9 +250,6 @@ class ShowUniversePage extends AbstractAdminPage
 			$max_fleets_per_acs		= HTTP::_GP('max_fleets_per_acs', 0);
 			$vmode_min_time			= HTTP::_GP('vmode_min_time', 0);
 			$gate_wait_time			= HTTP::_GP('gate_wait_time', 0);
-			$metal_start			= HTTP::_GP('metal_start', 0);
-			$crystal_start			= HTTP::_GP('crystal_start', 0);
-			$deuterium_start		= HTTP::_GP('deuterium_start', 0);
 			$darkmatter_start		= HTTP::_GP('darkmatter_start', 0);
 			$deuterium_cost_galaxy	= HTTP::_GP('deuterium_cost_galaxy', 0);
 			$max_fleet_per_build	= max(0, round(HTTP::_GP('max_fleet_per_build', 0.0)));
@@ -268,7 +263,8 @@ class ShowUniversePage extends AbstractAdminPage
 			$show_unlearned_buildings = (HTTP::_GP('show_unlearned_buildings', 'off') == 'on') ? 1 : 0;
 			$show_unlearned_technology = (HTTP::_GP('show_unlearned_technology', 'off') == 'on') ? 1 : 0;
 			$user_max_notes = HTTP::_GP('user_max_notes',20);
-
+			$show_ships_no_shipyard =  (HTTP::_GP('show_ships_no_shipyard', 'off') == 'on') ? 1 : 0;
+			$show_tech_no_research =  (HTTP::_GP('show_tech_no_research', 'off') == 'on') ? 1 : 0;
 
 
 			$config_after = array(
@@ -320,9 +316,6 @@ class ShowUniversePage extends AbstractAdminPage
 				'max_fleets_per_acs'	=> $max_fleets_per_acs,
 				'vmode_min_time'		=> $vmode_min_time,
 				'gate_wait_time'		=> $gate_wait_time,
-				'metal_start'			=> $metal_start,
-				'crystal_start'			=> $crystal_start,
-				'deuterium_start'		=> $deuterium_start,
 				'darkmatter_start'		=> $darkmatter_start,
 				'debris_moon'			=> $debris_moon,
 				'deuterium_cost_galaxy'	=> $deuterium_cost_galaxy,
@@ -337,7 +330,9 @@ class ShowUniversePage extends AbstractAdminPage
 				'show_unlearned_ships' => $show_unlearned_ships,
 				'show_unlearned_buildings' => $show_unlearned_buildings,
 				'show_unlearned_technology' => $show_unlearned_technology,
-				'user_max_notes' => $user_max_notes
+				'user_max_notes' => $user_max_notes,
+				'show_ships_no_shipyard' => $show_ships_no_shipyard,
+				'show_tech_no_research' => $show_tech_no_research,
 					);
 
 

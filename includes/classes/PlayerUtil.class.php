@@ -27,11 +27,11 @@ class PlayerUtil
 		$db = Database::get();
 		$sql = "SELECT COUNT(*) as record
 		FROM %%PLANETS%%
-		WHERE universe = :universe
-		AND galaxy = :galaxy
-		AND system = :system
-		AND planet = :position
-		AND planet_type = :type;";
+		WHERE `universe` = :universe
+		AND `galaxy` = :galaxy
+		AND `system` = :system
+		AND `planet` = :position
+		AND `planet_type` = :type;";
 
 		$count = $db->selectSingle($sql, array(
 			':universe' => $universe,
@@ -127,20 +127,7 @@ class PlayerUtil
 		}
 
 
-		switch ($config->server_default_theme) {
-			case 1:
-				$themeName = "nova";
-				break;
-			case 2:
-			$themeName = "gow";
-				break;
-			case 3:
-			$themeName = "EpicBlueXIII";
-				break;
-			default:
-			$themeName = "nova";
-				break;
-		}
+
 
 		$params			= array(
 			':username'				=> $userName,
@@ -155,29 +142,29 @@ class PlayerUtil
 			':onlinetime'			=> TIMESTAMP,
 			':registerTimestamp'	=> TIMESTAMP,
 			':password'				=> $userPassword,
-			':dpath'				=> $themeName,
+			':dpath'				=> $config->server_default_theme,
 			':timezone'				=> $config->timezone,
 			':nameLastChanged'		=> 0,
 			':darkmatter_start'		=> $config->darkmatter_start,
 		);
 
 		$sql = 'INSERT INTO %%USERS%% SET
-		username		= :username,
-		email			= :email,
-		email_2			= :email2,
-		user_secret_question_id = :user_secret_question_id,
-		user_secret_question_answer = :user_secret_question_answer,
-		authlevel		= :authlevel,
-		universe		= :universe,
-		lang			= :language,
-		ip_at_reg		= :registerAddress,
-		onlinetime		= :onlinetime,
-		register_time	= :registerTimestamp,
-		password		= :password,
-		dpath			= :dpath,
-		timezone		= :timezone,
-		uctime			= :nameLastChanged,
-		darkmatter		= :darkmatter_start;';
+		`username`		= :username,
+		`email`			= :email,
+		`email_2`			= :email2,
+		`user_secret_question_id` = :user_secret_question_id,
+		`user_secret_question_answer` = :user_secret_question_answer,
+		`authlevel`		= :authlevel,
+		`universe`		= :universe,
+		`lang`			= :language,
+		`ip_at_reg`		= :registerAddress,
+		`onlinetime`		= :onlinetime,
+		`register_time`	= :registerTimestamp,
+		`password`		= :password,
+		`dpath`			= :dpath,
+		`timezone`		= :timezone,
+		`uctime`			= :nameLastChanged,
+		`darkmatter`		= :darkmatter_start;';
 
 		$db = Database::get();
 
@@ -190,10 +177,10 @@ class PlayerUtil
 		$config->users_amount	= $currentUserAmount;
 
 		$sql = "UPDATE %%USERS%% SET
-		galaxy = :galaxy,
-		system = :system,
-		planet = :position,
-		id_planet = :planetId
+		`galaxy` = :galaxy,
+		`system` = :system,
+		`planet` = :position,
+		`id_planet` = :planetId
 		WHERE id = :userId;";
 
 		$db->update($sql, array(
@@ -211,13 +198,13 @@ class PlayerUtil
 		), 'rank');
 
 		$sql = "INSERT INTO %%USER_POINTS%% SET
-				id_owner	= :userId,
-				universe	= :universe,
-				tech_rank	= :rank,
-				build_rank	= :rank,
-				defs_rank	= :rank,
-				fleet_rank	= :rank,
-				total_rank	= :rank;";
+				`id_owner`	= :userId,
+				`universe`	= :universe,
+				`tech_rank`	= :rank,
+				`build_rank`	= :rank,
+				`defs_rank`	= :rank,
+				`fleet_rank`	= :rank,
+				`total_rank`	= :rank;";
 
 		$db->insert($sql, array(
 		   ':universe'	=> $universe,
@@ -228,6 +215,123 @@ class PlayerUtil
 		$config->save();
 
 		return array($userId, $planetId);
+	}
+
+	static public function updateColonyWithStartValues($planetID){
+
+		$db = Database::get();
+
+		$sql = "SELECT * FROM %%COLONY_SETTINGS%%;";
+
+		$colony_settings = $db->selectSingle($sql);
+
+		$sql = "UPDATE %%PLANETS%% SET
+		`metal` = :metal_start,
+		`crystal` = :crystal_start,
+		`deuterium` = :deuterium_start,
+		`metal_mine` = :metal_mine_start,
+		`crystal_mine` = :crystal_mine_start,
+		`deuterium_sintetizer` = :deuterium_mine_start,
+		`solar_plant` = :solar_plant_start,
+		`fusion_plant` = :fusion_plant_start,
+		`robot_factory` = :robot_factory_start,
+		`nano_factory` = :nano_factory_start,
+		`hangar` = :hangar_start,
+		`metal_store` = :metal_store_start,
+		`crystal_store` = :crystal_store_start,
+		`deuterium_store` = :deuterium_store_start,
+		`laboratory` = :laboratory_start,
+		`terraformer` = :terraformer_start,
+		`university` = :university_start,
+		`ally_deposit` = :ally_deposit_start,
+		`silo` = :silo_start,
+		`small_ship_cargo` = :small_ship_cargo_start,
+		`big_ship_cargo` = :big_ship_cargo_start,
+		`light_hunter` = :light_hunter_start,
+		`heavy_hunter` = :heavy_hunter_start,
+		`crusher` = :crusher_start,
+		`battle_ship` = :battle_ship_start,
+		`colonizer` = :colonizer_start,
+		`recycler` = :recycler_start,
+		`spy_sonde` = :spy_sonde_start,
+		`bomber_ship` = :bomber_ship_start,
+		`solar_satelit` = :solar_satelit_start,
+		`destructor` = :destructor_start,
+		`dearth_star` = :dearth_star_start,
+		`battleship` = :battleship_start,
+		`ev_transporter` = :ev_transporter_start,
+		`star_crasher` = :star_crasher_start,
+		`giga_recykler` = :giga_recykler_start,
+		`dm_ship` = :dm_ship_start,
+		`orbital_station` = :orbital_station_start,
+		`misil_launcher` = :misil_launcher_start,
+		`small_laser` = :small_laser_start,
+		`big_laser` = :big_laser_start,
+		`gauss_canyon` = :gauss_canyon_start,
+		`ionic_canyon` = :ionic_canyon_start,
+		`buster_canyon` = :buster_canyon_start,
+		`small_protection_shield` = :small_protection_shield_start,
+		`planet_protector` = :planet_protector_start,
+		`big_protection_shield` = :big_protection_shield_start,
+		`graviton_canyon` = :graviton_canyon_start,
+		`interceptor_misil` = :interceptor_misil_start,
+		`interplanetary_misil` = :interplanetary_misil_start
+		WHERE id = :planetID;";
+
+		Database::get()->update($sql,array(
+			':metal_start' => $colony_settings['metal_start'],
+			':crystal_start' => $colony_settings['crystal_start'],
+			':deuterium_start' => $colony_settings['deuterium_start'],
+			':metal_mine_start' => $colony_settings['metal_mine_start'],
+			':crystal_mine_start' => $colony_settings['crystal_mine_start'],
+			':deuterium_mine_start' => $colony_settings['deuterium_mine_start'],
+			':solar_plant_start' => $colony_settings['solar_plant_start'],
+			':fusion_plant_start' => $colony_settings['fusion_plant_start'],
+			':robot_factory_start' => $colony_settings['robot_factory_start'],
+			':nano_factory_start' => $colony_settings['nano_factory_start'],
+			':hangar_start' => $colony_settings['hangar_start'],
+			':metal_store_start' => $colony_settings['metal_store_start'],
+			':crystal_store_start' => $colony_settings['crystal_store_start'],
+			':deuterium_store_start' => $colony_settings['deuterium_store_start'],
+			':laboratory_start' => $colony_settings['laboratory_start'],
+			':terraformer_start' => $colony_settings['terraformer_start'],
+			':university_start' => $colony_settings['university_start'],
+			':ally_deposit_start' => $colony_settings['ally_deposit_start'],
+			':silo_start' => $colony_settings['silo_start'],
+			':small_ship_cargo_start' => $colony_settings['small_ship_cargo_start'],
+			':big_ship_cargo_start' => $colony_settings['big_ship_cargo_start'],
+			':light_hunter_start' => $colony_settings['light_hunter_start'],
+			':heavy_hunter_start' => $colony_settings['heavy_hunter_start'],
+			':crusher_start' => $colony_settings['crusher_start'],
+			':battle_ship_start' => $colony_settings['battle_ship_start'],
+			':colonizer_start' => $colony_settings['colonizer_start'],
+			':recycler_start' => $colony_settings['recycler_start'],
+			':spy_sonde_start' => $colony_settings['spy_sonde_start'],
+			':bomber_ship_start' => $colony_settings['bomber_ship_start'],
+			':solar_satelit_start' => $colony_settings['solar_satelit_start'],
+			':destructor_start' => $colony_settings['destructor_start'],
+			':dearth_star_start' => $colony_settings['dearth_star_start'],
+			':battleship_start' => $colony_settings['battleship_start'],
+			':ev_transporter_start' => $colony_settings['ev_transporter_start'],
+			':star_crasher_start' => $colony_settings['star_crasher_start'],
+			':giga_recykler_start' => $colony_settings['giga_recykler_start'],
+			':dm_ship_start' => $colony_settings['dm_ship_start'],
+			':orbital_station_start' => $colony_settings['orbital_station_start'],
+			':misil_launcher_start' => $colony_settings['misil_launcher_start'],
+			':small_laser_start' => $colony_settings['small_laser_start'],
+			':big_laser_start' => $colony_settings['big_laser_start'],
+			':gauss_canyon_start' => $colony_settings['gauss_canyon_start'],
+			':ionic_canyon_start' => $colony_settings['ionic_canyon_start'],
+			':buster_canyon_start' => $colony_settings['buster_canyon_start'],
+			':small_protection_shield_start' => $colony_settings['small_protection_shield_start'],
+			':planet_protector_start' => $colony_settings['planet_protector_start'],
+			':big_protection_shield_start' => $colony_settings['big_protection_shield_start'],
+			':graviton_canyon_start' => $colony_settings['graviton_canyon_start'],
+			':interceptor_misil_start' => $colony_settings['interceptor_misil_start'],
+			':interplanetary_misil_start' => $colony_settings['interplanetary_misil_start'],
+			':planetID' => $planetID,
+		));
+
 	}
 
 	static public function createPlanet($galaxy, $system, $position, $universe, $userId, $name = NULL, $isHome = false, $authlevel = 0)
@@ -287,28 +391,22 @@ class PlayerUtil
 			':maxFields'		=> $maxFields,
 			':minTemperature'	=> $minTemperature,
 			':maxTemperature'	=> $maxTemperature,
-			':metal_start'		=> $config->metal_start,
-			':crystal_start'	=> $config->crystal_start,
-			':deuterium_start'	=> $config->deuterium_start
 		);
 
 		$sql = 'INSERT INTO %%PLANETS%% SET
-		name		= :name,
-		universe	= :universe,
-		id_owner	= :userId,
-		galaxy		= :galaxy,
-		system		= :system,
-		planet		= :position,
-		last_update	= :updateTimestamp,
-		planet_type	= :type,
-		image		= :imageName,
-		diameter	= :diameter,
-		field_max	= :maxFields,
-		temp_min 	= :minTemperature,
-		temp_max 	= :maxTemperature,
-		metal		= :metal_start,
-		crystal		= :crystal_start,
-		deuterium	= :deuterium_start;';
+		`name`		= :name,
+		`universe`	= :universe,
+		`id_owner`	= :userId,
+		`galaxy`		= :galaxy,
+		`system`		= :system,
+		`planet`		= :position,
+		`last_update`	= :updateTimestamp,
+		`planet_type`	= :type,
+		`image`		= :imageName,
+		`diameter`	= :diameter,
+		`field_max`	= :maxFields,
+		`temp_min` 	= :minTemperature,
+		`temp_max` 	= :maxTemperature;';
 
 		$db = Database::get();
 		$db->insert($sql, $params);
@@ -322,13 +420,13 @@ class PlayerUtil
 
 		$db	= Database::get();
 
-		$sql = "SELECT id_luna, planet_type, id, name, temp_max, temp_min
+		$sql = "SELECT `id_luna`, `planet_type`, `id`, `name`, `temp_max`, `temp_min`
 				FROM %%PLANETS%%
-				WHERE universe = :universe
-				AND galaxy = :galaxy
-				AND system = :system
-				AND planet = :position
-				AND planet_type = :type;";
+				WHERE `universe` = :universe
+				AND `galaxy` = :galaxy
+				AND `system` = :system
+				AND `planet` = :position
+				AND `planet_type` = :type;";
 
 		$parentPlanet	= $db->selectSingle($sql, array(
 	 		':universe'	=> $universe,
@@ -357,25 +455,25 @@ class PlayerUtil
 		}
 
 		$sql	= "INSERT INTO %%PLANETS%% SET
-		name				= :name,
-		id_owner			= :owner,
-		universe			= :universe,
-		galaxy				= :galaxy,
-		system				= :system,
-		planet				= :planet,
-		last_update			= :updateTimestamp,
-		planet_type			= :type,
-		image				= :image,
-		diameter			= :diameter,
-		field_max			= :fields,
-		temp_min			= :minTemperature,
-		temp_max			= :maxTemperature,
-		metal				= :metal,
-		metal_perhour		= :metPerHour,
-		crystal				= :crystal,
-		crystal_perhour		= :cryPerHour,
-		deuterium			= :deuterium,
-		deuterium_perhour	= :deuPerHour;";
+		`name`				= :name,
+		`id_owner`			= :owner,
+		`universe`			= :universe,
+		`galaxy`				= :galaxy,
+		`system`				= :system,
+		`planet`				= :planet,
+		`last_update`			= :updateTimestamp,
+		`planet_type`			= :type,
+		`image`				= :image,
+		`diameter`			= :diameter,
+		`field_max`			= :fields,
+		`temp_min`			= :minTemperature,
+		`temp_max`			= :maxTemperature,
+		`metal`				= :metal,
+		`metal_perhour`		= :metPerHour,
+		`crystal`				= :crystal,
+		`crystal_perhour`		= :cryPerHour,
+		`deuterium`			= :deuterium,
+		`deuterium_perhour`	= :deuPerHour;";
 
 		$db->insert($sql, array(
 			':name'				=> $moonName,
@@ -531,7 +629,10 @@ class PlayerUtil
 	static public function deletePlanet($planetId)
 	{
 		$db			= Database::get();
-		$sql		= 'SELECT id_owner, planet_type, id_luna FROM %%PLANETS%% WHERE id = :planetId AND id NOT IN (SELECT id_planet FROM %%USERS%%);';
+
+		$sql		= "SELECT `id_owner`, `planet_type`, `id_luna` FROM %%PLANETS%%
+		WHERE `id` = :planetId AND `id` NOT IN (SELECT `id_planet` FROM %%USERS%%);";
+
 		$planetData = $db->selectSingle($sql, array(
 			':planetId'	=> $planetId
 		));
@@ -541,7 +642,9 @@ class PlayerUtil
 			throw new Exception("Can not found planet #".$planetId."!");
 		}
 
-		$sql		= 'SELECT fleet_id FROM %%FLEETS%% WHERE fleet_end_id = :planetId OR (fleet_end_type = 3 AND fleet_end_id = :moondId);';
+		$sql = "SELECT `fleet_id` FROM %%FLEETS%%
+		WHERE `fleet_end_id` = :planetId OR (`fleet_end_type` = 3 AND `fleet_end_id` = :moondId);";
+
 		$fleetIds	= $db->select($sql, array(
 			':planetId'	=> $planetId,
 			':moondId'	=> $planetData['id_luna']
@@ -553,18 +656,18 @@ class PlayerUtil
 		}
 
 		if ($planetData['planet_type'] == 3) {
-			$sql	= 'DELETE FROM %%PLANETS%% WHERE id = :planetId;';
+			$sql	= "DELETE FROM %%PLANETS%% WHERE `id` = :planetId;";
 			$db->delete($sql, array(
 				':planetId'	=> $planetId
 			));
 
-			$sql	= 'UPDATE %%PLANETS%% SET id_luna = :resetId WHERE id_luna = :planetId;';
+			$sql	= "UPDATE %%PLANETS%% SET `id_luna` = :resetId WHERE `id_luna` = :planetId;";
 			$db->update($sql, array(
 				':resetId'	=> 0,
 				':planetId'	=> $planetId
 			));
 		} else {
-			$sql	= 'DELETE FROM %%PLANETS%% WHERE id = :planetId OR id_luna = :planetId;';
+			$sql	= "DELETE FROM %%PLANETS%% WHERE `id` = :planetId OR `id_luna` = :planetId;";
 			$db->delete($sql, array(
 			   ':planetId'	=> $planetId
 			));
@@ -631,24 +734,24 @@ class PlayerUtil
 		$db = Database::get();
 
 		$sql = "INSERT INTO %%MESSAGES%% SET
-		message_owner		= :userId,
-		message_sender		= :sender,
-		message_time		= :time,
-		message_type		= :type,
-		message_from		= :from,
-		message_subject 	= :subject,
-		message_text		= :text,
-		message_unread		= :unread,
-		message_universe 	= :universe;";
+		`message_owner`		= :userId,
+		`message_sender`		= :sender,
+		`message_time`		= :messageTime,
+		`message_type`		= :type,
+		`message_from`		= :messageFrom,
+		`message_subject` 	= :subject,
+		`message_text`		= :messageText,
+		`message_unread`		= :unread,
+		`message_universe` 	= :universe;";
 
 		$db->insert($sql, array(
 			':userId'	=> $userId,
 			':sender'	=> $senderId,
-			':time'		=> $time,
+			':messageTime' => $time,
 			':type'		=> $messageType,
-			':from'		=> $senderName,
+			':messageFrom' => $senderName,
 			':subject'	=> $subject,
-			':text'		=> $text,
+			':messageText' => $text,
 			':unread'	=> $unread,
 			':universe'	=> $universe,
 		));
