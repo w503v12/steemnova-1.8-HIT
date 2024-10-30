@@ -103,6 +103,7 @@ class MissionFunctions
 		p.`metal` = p.`metal` + :metal,
 		p.`crystal` = p.`crystal` + :crystal,
 		p.`deuterium` = p.`deuterium` + :deuterium,
+		p.`version` = p.`version` + 1,
 		u.`darkmatter` = u.`darkmatter` + :darkmatter
 		WHERE p.`id` = :planetId AND u.id = p.id_owner;';
 
@@ -117,7 +118,8 @@ class MissionFunctions
 		`metal`			= `metal` + :metal,
 		`crystal`		= `crystal` + :crystal,
 		`deuterium` 	= `deuterium` + :deuterium,
-		`darkmatter`	= `darkmatter` + :darkmatter
+		`darkmatter`	= `darkmatter` + :darkmatter,
+	  `version` = `version` + 1
 		WHERE p.`id` = :planetId AND u.id = p.id_owner;';
 
 		Database::get()->update($sql, array(
@@ -159,4 +161,36 @@ class MissionFunctions
 		$LNG->includeData(array('L18N', 'FLEET', 'TECH', 'CUSTOM'));
 		return $LNG;
 	}
+
+	function savePlanetProduction($planetId, $startTime){
+		$db = Database::get();
+
+		$sql			= "SELECT * FROM %%PLANETS%% WHERE id = :planetId;";
+
+		$Planet 	= $db->selectSingle($sql, array(
+			':planetId'	=> $planetId
+		));
+
+		$sql			= "SELECT * FROM %%USERS%% WHERE id = :userId;";
+
+		$User	= $db->selectSingle($sql, array(
+			':userId'	=> $Planet['id_owner']
+		));
+
+
+		if (!$Planet || !$User) { //moon is destroyed and deleted from planets table
+			return;
+		}
+
+
+
+		$User['factor']	= getFactors($User, 'basic', $startTime);
+
+		$planetUpdater	= new ResourceUpdate();
+
+		$planetUpdater->CalcResource($User, $Planet, true, $startTime);
+
+
+	}
+
 }

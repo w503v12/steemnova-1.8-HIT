@@ -7,6 +7,7 @@
 	}
 	function closePopover(){
 		$('.popover').removeClass('show');
+		$('.popover').popover('hide');
 	}
 </script>
 
@@ -22,25 +23,25 @@
 		<tbody>
 			<tr>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="button" name="galaxyLeft" value="&lt;" onclick="galaxy_submit('galaxyLeft')">
+					<input class="btn bg-dark m-0 text-yellow text-center fs-12 fw-bold" type="button" name="galaxyLeft" value="&lt;" onclick="galaxy_submit('galaxyLeft')">
 				</td>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="text" name="galaxy" value="{$galaxy}" size="5" maxlength="3" tabindex="1">
+					<input class="text-center form-control bg-dark text-white border-0" type="text" name="galaxy" value="{$galaxy}" size="5" maxlength="3" tabindex="1">
 				</td>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="button" name="galaxyRight" value="&gt;" onclick="galaxy_submit('galaxyRight')">
+					<input class="btn bg-dark text-yellow text-center fs-12 fw-bold" type="button" name="galaxyRight" value="&gt;" onclick="galaxy_submit('galaxyRight')">
 				</td>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="button" name="systemLeft" value="&lt;" onclick="galaxy_submit('systemLeft')">
+					<input class="btn bg-dark text-yellow text-center fs-12 fw-bold" type="button" name="systemLeft" value="&lt;" onclick="galaxy_submit('systemLeft')">
 				</td>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="text" name="system" value="{$system}" size="5" maxlength="3" tabindex="2">
+					<input class="text-center form-control bg-dark text-white border-0" type="text" name="system" value="{$system}" size="5" maxlength="3" tabindex="2">
 				</td>
 				<td class="text-center">
-					<input class="text-yellow text-center" type="button" name="systemRight" value="&gt;" onclick="galaxy_submit('systemRight')">
+					<input class="btn bg-dark text-yellow text-center fs-12 fw-bold" type="button" name="systemRight" value="&gt;" onclick="galaxy_submit('systemRight')">
 				</td>
 				<td colspan="1">
-					<input class="text-yellow" id="galaxySubmit" type="submit" value="{$LNG.gl_show}">
+					<input class="btn bg-dark text-yellow text-center fs-12 fw-bold w-100" id="galaxySubmit" type="submit" value="{$LNG.gl_show}">
 				</td>
 			</tr>
 		</tbody>
@@ -138,7 +139,7 @@
 					<td>
 						<div class='d-flex flex-column'>
 						{if $currentPlanet.missions.6}
-						<a class='hover-underline my-1 hover-pointer' onclick='doit(6,{$currentPlanet.planet.id})'>{$LNG.type_mission_6}</a>
+						<a class='hover-underline my-1 hover-pointer' onclick='doit(6,{$currentPlanet.planet.id});closePopover();'>{$LNG.type_mission_6}</a>
 						{/if}
 						{foreach $currentPlanet.user.class as $class}
 						{if $class != 'vacation' && $currentPlanet.planet.phalanx}
@@ -184,7 +185,7 @@
 				<img class="hover-border-yellow" src="{$dpath}planeten/{$currentPlanet.planet.image}.jpg" height="30" width="30" alt="">
 			</a>
 		</td>
-		<td class="text-center align-middle" style="white-space: nowrap;">{$currentPlanet.planet.name} {$currentPlanet.lastActivity}</td>
+		<td class="text-center align-middle color-blue" style="white-space: nowrap;">{$currentPlanet.planet.name}<span class="color-red px-1">{$currentPlanet.lastActivity}</span></td>
 		<td class="text-center align-middle" style="white-space: nowrap;">
 			{if $currentPlanet.moon}
 			<a onclick="closePopovers();" class="hover-pointer" data-bs-toggle="popover"
@@ -249,7 +250,7 @@
 									 </a>
 									 {/if}
 									 {if $currentPlanet.missions.6}
-									 <a class='hover-underline my-1 hover-pointer' onclick='doit(6,{$currentPlanet.moon.id});'>
+									 <a class='hover-underline my-1 hover-pointer' onclick='doit(6,{$currentPlanet.moon.id});closePopover();'>
 										 {$LNG.type_mission_6}
 									 </a>
 									 {/if}
@@ -312,7 +313,8 @@
         {/if}
 		</td>
 		<td class="text-center align-middle">
-			<a onclick="closePopovers();" class="hover-underline hover-pointer user-select-none" data-bs-toggle="popover"
+			<a onclick="closePopovers();" class="hover-underline hover-pointer user-select-none"
+			data-bs-toggle="popover"
 			data-bs-placement="right"
 			data-bs-html="true"
 			 title="<table class='table table-gow fs-11 w-100'>
@@ -349,7 +351,8 @@
 		</td>
 		<td class="text-center align-middle" style="white-space: nowrap;">
 			{if $currentPlanet.alliance}
-			<a onclick="closePopovers();" class="hover-underline hover-pointer user-select-none" data-bs-toggle="popover"
+			<a onclick="closePopovers();" class="hover-underline hover-pointer user-select-none"
+			data-bs-toggle="popover"
 			data-bs-placement="right"
 			data-bs-html="true"
 			 title="<table class='table table-gow fs-11 w-100 px-0'>
@@ -373,6 +376,7 @@
 						</td>
 					</tr>
 					{/if}
+					<button style='height:18px;width:18px;bottom:3px;right:3px;' class='position-absolute p-0 m-0 text-white fs-11' onclick='closePopover();'>X</button>
 				 </table>">
 				<span class="{foreach $currentPlanet.alliance.class as $class}{if !$class@first} {/if}galaxy-alliance-{$class}{/foreach} galaxy-alliance">{$currentPlanet.alliance.tag}</span>
 			</a>

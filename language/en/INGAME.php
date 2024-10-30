@@ -18,6 +18,63 @@
 // 2Moons - Copyright (C) 2010-2012 Slaver
 // Grammar Pedantry fixes @etaletai 2018
 
+//MODULE_FLIGHT_SIMULATOR
+$LNG['lm_flight_simulator'] = "Flight Sim";
+$LNG['fs_flight_sim'] = "Flight Sim.";
+$LNG['fs_time'] = "time";
+$LNG['fs_percantage'] = "%";
+$LNG['fs_time_hours'] = "hours";
+$LNG['fs_time_seconds'] = "seconds";
+$LNG['fs_time_minutes'] = "minutes";
+
+//MODULE_COLLECT_MINES
+$LNG['cm_error_1'] = "Mines cannot be collected in vacation mode !";
+$LNG['cm_error_2'] = "Mines cannot be collected under attack !";
+$LNG['cm_error_3'] = "You need to wait %s minutes before next !";
+$LNG['cm_collect_mines_submit'] = "Collect Mines!";
+
+//MODULE_AUTOEXPEDITION
+$LNG['ae_autoexp'] = "Auto Expedition";
+$LNG['ae_galaxy'] = "Galaxy";
+$LNG['ae_system'] = "System";
+$LNG['ae_planet'] = "Planet";
+$LNG['ae_settings'] = "Settings";
+$LNG['ae_send'] = "Send expedition!";
+$LNG['ae_error_1'] = "Not enough expedition slot !";
+$LNG['ae_error_2'] = "Expedition is not possible on vacation mode !";
+$LNG['ae_error_3'] = "Recaptcha is wrong !";
+$LNG['ae_error_4'] = "No fleets found !";
+$LNG['ae_success'] = "Fleet(s) sent to expedition mission, successfully";
+//relocate module
+
+$LNG['cannot_use_in_vac'] = "You cannot use this option in vacation mode";
+$LNG['rl_relocate'] = "relocate";
+$LNG['rl_info'] = "You need %s Dark Matter to move your planet / moon !";
+$LNG['rl_error_type_1'] = "You didn't enter coordinates correctly";
+$LNG['rl_error_type_2'] ="Relocation should be started from Planet";
+$LNG['rl_error_type_3'] ="Position is not free";
+$LNG['rl_error_type_4'] ="Wrong possition !";
+$LNG['rl_error_type_5'] ="You cannot move planet if there is a building in construction !";
+$LNG['rl_error_type_6'] ="You cannot move planet if there is a research started from planet !";
+$LNG['rl_error_type_7'] ="There is fleet movement which is started from this planet, you cannot relocate !";
+$LNG['rl_error_type_8'] ="Same planet can be moved once in every %s hours";
+$LNG['rl_error_type_9'] = "You cannot move planet if there is a construction in shipyard !";
+$LNG['rl_error_type_10'] = "You cannot move planet if the planet is under attack !";
+$LNG['rl_error_type_11'] = "Not Enough Dark Matter !";
+$LNG['rl_success'] = "Your planet was teleported to the following coordinates: ";
+$LNG['lm_relocate'] = "Relocate";
+
+
+//main.topnav.tpl//
+
+$LNG['resource_available'] = "Available";
+$LNG['resource_capacity'] = "Storage Capacity";
+$LNG['resource_production'] = "Production";
+$LNG['energy_available'] = "Available Energy";
+$LNG['energy_used'] = "Used Energy";
+$LNG['energy_produced'] = "Produced Energy";
+$LNG['darkmatter_available'] = "Current Darkmatter";
+
 //-------------------- fleetTable.tpl  ------------------//
 
 $LNG['fm_no_fleet_movements'] = "No Fleet Movements";
@@ -348,6 +405,7 @@ $LNG['fl_acs_title']						= 'Alliance attack';
 $LNG['fl_hold_time']						= 'At Flying';
 $LNG['fl_resources']						= 'Resources';
 $LNG['fl_max']								= 'max';
+$LNG['fl_min']								= 'min';
 $LNG['fl_hours']                            = 'Hours';
 $LNG['fl_resources_left']				    = 'Capacity avaliable';
 $LNG['fl_all_resources']			        = 'All resources';

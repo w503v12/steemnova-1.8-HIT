@@ -161,8 +161,11 @@ define('AUTH_OPS'					, 2);
 define('AUTH_MOD'					, 1);
 define('AUTH_USR'					, 0);
 
+//attack check time in miliseconds
+define('ATTACK_LISTEN_TIME' , 1000);
+
 // Modules
-define('MODULE_AMOUNT'				, 46);
+define('MODULE_AMOUNT'				, 51);
 define('MODULE_ALLIANCE'			, 0);
 define('MODULE_BANLIST'				, 21);
 define('MODULE_BANNER'				, 37);
@@ -211,6 +214,11 @@ define('MODULE_TRADER'				, 13);
 define('MODULE_DISCORD' , 43);
 define('MODULE_FORUM' , 44);
 define('MODULE_SERVER_INFO', 45);
+define('MODULE_ATTACK_ALERT', 46);
+define('MODULE_RELOCATE', 47);
+define('MODULE_AUTOEXPEDITION', 48);
+define('MODULE_COLLECT_MINES', 49);
+define('MODULE_FLIGHT_SIMULATOR', 50);
 
 // FLEET STATE
 define('FLEET_OUTWARD'				, 0);

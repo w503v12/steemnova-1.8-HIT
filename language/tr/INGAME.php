@@ -19,6 +19,36 @@
 // Translated into Turkish by Ibraihm Senyer . All rights reversed (C) 2013
 // 2Moons - Copyright (C) 2010-2012 Slaver
 
+//relocate module
+
+$LNG['cannot_use_in_vac'] = "Bu özelliği tatil modundayken kullanamazsınız !";
+$LNG['rl_relocate'] = "İskan";
+$LNG['rl_info'] = "Gezegen ya da ayınızı taşımak için ihtiyacınız olan karanlık madde: %s !";
+$LNG['rl_error_type_1'] = "Koordinatlar doğru girilmedi !";
+$LNG['rl_error_type_2'] ="İskan emri gezegenden başlatılmalı !";
+$LNG['rl_error_type_3'] ="Koordinatlar boş değil";
+$LNG['rl_error_type_4'] ="Yanlış koordinatlar";
+$LNG['rl_error_type_5'] ="İnşaa listenizde bina varken gezegeninizi taşıyamazsınız !";
+$LNG['rl_error_type_6'] ="Gezegeninizden başlatılmış bir araştırma olduğu için iskan edemezsiniz !";
+$LNG['rl_error_type_7'] ="Bu gezegenden başlatılan bir filo hareketi olduğu için iskan edemezsiniz !";
+$LNG['rl_error_type_8'] ="Aynı gezegen her %s saatte bir taşınabilir.";
+$LNG['rl_error_type_9'] = "Tershanede üretim emri varsa gezegeninizi taşıyamazsınız";
+$LNG['rl_error_type_10'] = "Saldırı altındayken gezegeninizi taşıyamazsınız !";
+$LNG['rl_error_type_11'] = "Yeterli karanlık maddeye sahip değilsiniz !";
+$LNG['rl_success'] = "Gezegeniniz belirtilen koordinatlara taşındı: ";
+$LNG['lm_relocate'] = "İskan";
+
+
+//main.topnav.tpl//
+
+$LNG['resource_available'] = "Mevcut";
+$LNG['resource_capacity'] = "Depo Kapasitesi";
+$LNG['resource_production'] = "Üretim";
+$LNG['energy_available'] = "Mevcut Enerji";
+$LNG['energy_used'] = "Kullanılan Enerji";
+$LNG['energy_produced'] = "Üretilen Enerji";
+$LNG['darkmatter_available'] = "Mevcut Karanlık Madde";
+
 //-------------------------------- filoTable.tpl ------------------//
 
 $LNG['fm_no_fleet_movements'] = "Filo Hareketi Yok";
@@ -180,6 +210,9 @@ $LNG['ov_closed']							= 'Evren şu an çevrimdışı';
 $LNG['ov_reflink']							= 'Davet et';
 $LNG['ov_noreflink']						= 'Şu ana kadar sayende <br> 0 </br>kişi katıldı .';
 $LNG['ov_chat_online']						= 'Sohbetteki Oyuncular:';
+$LNG['ov_players'] = "Oyuncular";
+$LNG['ov_moving_fleets'] = "Aktif Filolar";
+
 $LNG['Metal']                      			= 'Metal';
 $LNG['Crystal']                      		= 'Kristal';
 $LNG['Deuterium']                      		= 'Deuterium';
@@ -213,10 +246,10 @@ $LNG['gl_short_vacation']					= 'T';
 $LNG['gl_short_ban']						= 'C';
 $LNG['gl_short_inactive']					= 'i';
 $LNG['gl_short_long_inactive']				= 'I';
-$LNG['gl_populed_planets']					= '%s Gezegende Yerlesim Goruldu';
-$LNG['gl_out_space']						= 'Uzay Boslugu';
+$LNG['gl_populed_planets']					= '%s Gezegende Yerleşim Görüldü';
+$LNG['gl_out_space']						= 'Derin Uzay';
 $LNG['gl_avaible_missiles']					= 'Mevcut Roketler';
-$LNG['gl_fleets']							= 'Filo Kotasi';
+$LNG['gl_fleets']							= 'Filo Kotası';
 $LNG['gl_avaible_grecyclers']				= 'Hiper Geri Donusumcu';
 $LNG['gl_avaible_recyclers']				= 'Geri Dönüşümcü';
 $LNG['gl_avaible_spyprobes']				= 'Casus Sondası';
@@ -227,18 +260,18 @@ $LNG['gl_objective']						= 'Hedef';
 $LNG['gl_missil_launch_action']				= 'Atesle';
 $LNG['gl_galaxy']							= 'Galaksi';
 $LNG['gl_solar_system']						= 'Sistem';
-$LNG['gl_show']								= 'Goster';
+$LNG['gl_show']								= 'Git!';
 $LNG['gl_pos']								= 'Koor.';
 $LNG['gl_planet']							= 'Gezegen';
-$LNG['gl_name_activity']					= 'Isim (Aktivite)';
+$LNG['gl_name_activity']					= 'Ad (Aktivite)';
 $LNG['gl_moon']								= 'Ay';
 $LNG['gl_debris']							= 'HA';
-$LNG['gl_player_estate']					= 'Oyuncu (Statu)';
-$LNG['gl_alliance']							= 'Ittifak';
+$LNG['gl_player_estate']					= 'Oyuncu (Durum)';
+$LNG['gl_alliance']							= 'İttifak';
 $LNG['gl_actions']							= 'Aksiyonlar';
 $LNG['gl_spy']								= 'Casusluk';
-$LNG['gl_buddy_request']					= 'Arkadaslik Istegi';
-$LNG['gl_missile_attack']					= 'Roket Saldirisi';
+$LNG['gl_buddy_request']					= 'Arkadaşlık İsteği';
+$LNG['gl_missile_attack']					= 'Roket Saldırısı';
 $LNG['gl_with']								= ' sirasini ';
 $LNG['gl_member']							= '%d uye ile koruyor';
 $LNG['gl_member_add']						= '%d (s)';
@@ -546,16 +579,16 @@ $LNG['in_bonus'] 							= 'Bonus:';
 
 //----------------------------------------------------------------------------//
 // Mesajlar
-$LNG['mg_type'][0]                          = 'Casusluk Mesajlari';
-$LNG['mg_type'][1]                          = 'Oyuncu Mesajlari';
-$LNG['mg_type'][2]                          = 'Ittifak Mesajlari';
-$LNG['mg_type'][3]                          = 'Savas Mesajlari';
-$LNG['mg_type'][4]                          = 'Sistem Mesajlari';
-$LNG['mg_type'][5]                          = 'Nakliye Mesajlari';
-$LNG['mg_type'][15]                         = 'Kesif Mesajlari';
+$LNG['mg_type'][0]                          = 'Casusluk Mesajları';
+$LNG['mg_type'][1]                          = 'Oyuncu Mesajları';
+$LNG['mg_type'][2]                          = 'İttifak Mesajları';
+$LNG['mg_type'][3]                          = 'Savaş Mesajları';
+$LNG['mg_type'][4]                          = 'Sistem Mesajları';
+$LNG['mg_type'][5]                          = 'Nakliye Mesajları';
+$LNG['mg_type'][15]                         = 'Keşif Mesajları';
 $LNG['mg_type'][50]                         = 'Oyundan Haberler';
-$LNG['mg_type'][99]                         = 'Insaa Mesajlari';
-$LNG['mg_type'][100]                        = 'Butun Mesajlari';
+$LNG['mg_type'][99]                         = 'İnşaa Mesajları';
+$LNG['mg_type'][100]                        = 'Bütün Mesajlar';
 $LNG['mg_type'][999]                        = 'Giden Mesajlar';
 $LNG['mg_no_subject']			            = 'Konu Yok';
 $LNG['mg_no_text']				            = 'Mesaj Yok';
@@ -569,30 +602,30 @@ $LNG['mg_action']							= 'Aksiyon';
 $LNG['mg_date']					        	= 'Tarih';
 $LNG['mg_from']					            = 'Kimden';
 $LNG['mg_to']                               = 'Kime';
-$LNG['mg_subject']					        = 'Baslik';
+$LNG['mg_subject']					        = 'Başlık';
 $LNG['mg_message_title']					= 'Mesajlar';
 $LNG['mg_message_type']			            = 'Mesaj Tipi';
 $LNG['mg_total']				            = 'Toplam';
-$LNG['mg_game_operators']			        = 'Yoneticiler';
+$LNG['mg_game_operators']			        = 'Yöneticiler';
 $LNG['mg_error']                            = 'Alici Bulunamadi!';
-$LNG['mg_overview']                         = 'Yoneticilerden Bilgiler';
+$LNG['mg_overview']                         = 'Yöneticilerden Bilgiler';
 $LNG['mg_send_new']                         = 'Mesaj Yaz';
-$LNG['mg_send_to']                          = 'Alicilar';
+$LNG['mg_send_to']                          = 'Alıcılar';
 $LNG['mg_message']                          = 'Mesaj';
 $LNG['mg_characters']                       = 'karakter';
-$LNG['mg_send']                             = 'Gonder';
+$LNG['mg_send']                             = 'Gönder';
 $LNG['mg_game_message']                     = 'Oku';
-$LNG['mg_message_send']			            = 'Mesaj basariyla gonderildi!';
+$LNG['mg_message_send']			            = 'Mesaj başarıyla gönderildi!';
 $LNG['mg_empty_text']				        = 'Metin giriniz';
 $LNG['mg_answer_to']						= 'Cevapla:';
-$LNG['mg_write_mail_to_ops']                = 'Email gonder';
+$LNG['mg_write_mail_to_ops']                = 'Email gönder';
 $LNG['mg_page']								= 'Sayfa';
-$LNG['mg_read_marked']						= 'Secili mesajlari okundu olarak isaretle';
-$LNG['mg_read_type_all']					= 'Butun mesajlari okundu olarak isaretle';
-$LNG['mg_read_all']							= 'Bu tip mesajlari okundu olarak isaretle';
+$LNG['mg_read_marked']						= 'Seçili mesajları okundu olarak işaretle';
+$LNG['mg_read_type_all']					= 'Bütün mesajları okundu olarak işaretle';
+$LNG['mg_read_all']							= 'Bu tip mesajlari okundu olarak işaretle';
 $LNG['mg_confirm']							= 'Onayla';
 $LNG['mg_receiver_block_pm']				= 'Alici ozel mesaj kabul etmiyor.';
-$LNG['mg_deleted']					= 'The message has been deleted.';
+$LNG['mg_deleted']					= 'Mesaj silindi.';
 
 
 //----------------------------------------------------------------------------//

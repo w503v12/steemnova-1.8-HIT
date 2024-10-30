@@ -7,10 +7,17 @@
 		{foreach $CategoryList as $CategoryID => $CategoryRow}
 		{if ($CategoryRow@iteration % 6) === 1}<tr>{/if}
 		{if $CategoryRow@last && ($CategoryRow@iteration % 6) !== 0}<td>&nbsp;</td>{/if}
-		<td style="line-height:1;" class="text-center align-middle" style="word-wrap: break-word;color:{$CategoryRow.color};">
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$CategoryID}" style="color:{$CategoryRow.color};">{$LNG.mg_type.{$CategoryID}}</a>
-		<br>
-		<span class="fs-12" id="unread_{$CategoryID}">{$CategoryRow.unread}</span><span class="fs-12">/</span><span class="fs-12" id="total_{$CategoryID}">{$CategoryRow.total}</span>
+		<td  onclick="window.location.href='game.php?page=messages&category={$CategoryID}'" class="{if $CategoryID == $MessID}bg-black{/if} text-center align-middle hover-pointer bg-hover-black" style="word-wrap: break-word;color:{$CategoryRow.color};">
+		<div class="d-flex flex-column p-0 m-0 user-select-none">
+			<div>
+				<span class="fs-12" href="" style="color:{$CategoryRow.color};">{$LNG.mg_type.{$CategoryID}}</a>
+			</div>
+			<div>
+				<span class="fs-12" id="unread_{$CategoryID}">{$CategoryRow.unread}</span>
+				<span class="fs-12">/</span>
+				<span data-total-number="{$CategoryRow.total}" class="fs-12" id="total_{$CategoryID}">{$CategoryRow.total}</span>
+			</div>
+		</div>
 		</td>
 		{if $CategoryRow@last || ($CategoryRow@iteration % 6) === 0}</tr>{/if}
 		{/foreach}
@@ -44,23 +51,17 @@
 	<tr style="height: 20px;">
 		<td colspan="5" class="text-center">
 			<span class="fs-12">{$LNG.mg_page}:</span>
-			{if $messagePage != 1}
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side=1">&laquo;</a>&nbsp;
-			{/if}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side=1'" class="btn btn-dark py-0 px-2 border border-secondary fs-12 text-yellow">&laquo;</button>
 			{if $messagePage > 5}..&nbsp;{/if}
 			{for $site=1 to $maxPage}
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side={$site}">
-				{if $site == $messagePage}
-				<b>[{$site}]&nbsp;</b>
-				{elseif ($site > $messagePage - 5 && $site < $messagePage+5)}
-				[{$site}]&nbsp;
-				{/if}
-			</a>
+			{if ($site > $messagePage-5 && $site < $messagePage+5)}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side={$site}'" class="btn btn-dark py-0 px-1 border {if $site == $messagePage} border-primary {else}border-secondary{/if} fs-12 text-yellow">
+				{$site}
+			</button>
+			{/if}
 			{/for}
 			{if $messagePage < $maxPage-4}..&nbsp;{/if}
-			{if $messagePage != $maxPage}&nbsp;
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side={$maxPage}">&raquo;</a>
-			{/if}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side={$maxPage}'" class="btn btn-dark py-0 px-2 border border-secondary fs-12 text-yellow">&raquo;</a>
 		</td>
 	</tr>
 </table>
@@ -87,7 +88,7 @@
 		</td>
 		<td class="text-center align-middle">
 			{if $MessID != 999}
-			<a href="#" onclick="Message.delMessage({$Message.id});return false;">
+			<a href="#" onclick="Message.deleteMessage({$Message.id}, {$Message.type});return false;">
 				<img src="{$dpath}img/deletemsg.png">
 			</a>
 			{/if}
@@ -95,29 +96,24 @@
 	</tr>
 	<tr class="message_{$Message.id} messages_body{if $MessID != 999 && $Message.unread == 1} mes_unread{/if}">
 		<td class="fs-12" colspan="5" class="left">
-		{$Message.text}
+			<p class="message_{$MessID}">{$Message.text}</p>
 		</td>
 	</tr>
 	{/foreach}
 	<tr style="height: 20px;">
-		<td class="text-center" colspan="5">
+		<td colspan="5" class="text-center">
 			<span class="fs-12">{$LNG.mg_page}:</span>
-			{if $messagePage != 1}
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side=1">&laquo;</a>
-			&nbsp;
-			{/if}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side=1'" class="btn btn-dark py-0 px-2 border border-secondary fs-12 text-yellow">&laquo;</button>
 			{if $messagePage > 5}..&nbsp;{/if}
 			{for $site=1 to $maxPage}
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side={$site}">
-				{if $site == $messagePage}
-				<b>[{$site}]&nbsp;</b>
-				{elseif ($site > $messagePage-5 && $site < $messagePage+5)}
-				[{$site}]&nbsp;{/if}
-			</a>
-			{/for}
-			{if $messagePage < $maxPage-4}..&nbsp;{/if}{if $messagePage != $maxPage}&nbsp;
-			<a class="fs-12 hover-underline" href="game.php?page=messages&category={$MessID}&side={$maxPage}">&raquo;</a>
+			{if ($site > $messagePage-5 && $site < $messagePage+5)}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side={$site}'" class="btn btn-dark py-0 px-1 border {if $site == $messagePage} border-primary {else}border-secondary{/if} fs-12 text-yellow">
+				{$site}
+			</button>
 			{/if}
+			{/for}
+			{if $messagePage < $maxPage-4}..&nbsp;{/if}
+			<button style="min-width:32px;" type="button" onclick="window.location.href='game.php?page=messages&category={$MessID}&side={$maxPage}'" class="btn btn-dark py-0 px-2 border border-secondary fs-12 text-yellow">&raquo;</a>
 		</td>
 	</tr>
 	{if $MessID != 999}

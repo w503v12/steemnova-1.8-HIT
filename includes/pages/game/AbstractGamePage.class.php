@@ -56,6 +56,37 @@ abstract class AbstractGamePage
 		return $fleetTableObj->renderTable();
 	}
 
+	function getAttack(){
+		global $USER;
+
+		$db = Database::get();
+
+		$sql = "SELECT (SELECT
+		COUNT(*) FROM %%FLEETS%% WHERE
+		fleet_owner != :userId AND fleet_mess = 0 AND fleet_universe = :universe AND fleet_target_owner = :userId AND (fleet_mission = 1 OR fleet_mission = 9) AND hasCanceled=0) AS attack,
+		(SELECT
+		COUNT(*) FROM %%FLEETS%% WHERE
+		fleet_owner != :userId AND fleet_mess = 0 AND fleet_universe = :universe AND fleet_target_owner = :userId AND fleet_mission = 6 AND hasCanceled=0) AS spy
+		FROM DUAL ";
+
+		$fleets = $db->selectSingle($sql,array(
+			':userId' => $USER['id'],
+			':universe' => Universe::current()
+		));
+
+		if ($fleets['attack'] > 0 && $fleets['spy'] > 0) {
+			$data = "spy";
+		}else if ($fleets['attack'] > 0 && $fleets['spy'] == 0) {
+			$data = "attack";
+		}else if ($fleets['spy'] >0 && $fleets['attack'] == 0){
+			$data = "spy";
+		}else {
+			$data = "noattack";
+		}
+
+		$this->sendJSON($data);
+	}
+
 	protected function initTemplate() {
 		global $config, $USER;
 
@@ -70,7 +101,7 @@ abstract class AbstractGamePage
 		$theme = ($config->let_users_change_theme) ? $USER['dpath'] : $config->server_default_theme;
 
 		$path = "theme/" . $theme;
-		
+
 
 		$this->tplObj->setTemplateDir($tplDir. $path);
 		return true;
@@ -247,9 +278,9 @@ abstract class AbstractGamePage
 					'selected' => ($CPLANET['id'] == $PLANET['id']) ? true : false,
 					'field_current' => $CPLANET['field_current'],
 					'field_max' => $CPLANET['field_max'],
-					'diameter' => $CPLANET['diameter'],
-					'temp_min' => $CPLANET['temp_min'],
-					'temp_max' => $CPLANET['temp_max'],
+					'diameter' => pretty_number($CPLANET['diameter']) . " km",
+					'temp_min' => $CPLANET['temp_min'] . " °C",
+					'temp_max' => $CPLANET['temp_max'] . " °C",
 				);
 
 			}else {
@@ -265,9 +296,9 @@ abstract class AbstractGamePage
 					'selected' => ($CPLANET['id'] == $PLANET['id']) ? true : false,
 					'field_current' => $CPLANET['field_current'],
 					'field_max' => $CPLANET['field_max'],
-					'diameter' => $CPLANET['diameter'],
-					'temp_min' => $CPLANET['temp_min'],
-					'temp_max' => $CPLANET['temp_max'],
+					'diameter' => pretty_number($CPLANET['diameter']) . " km",
+					'temp_min' => $CPLANET['temp_min'] . " °C",
+					'temp_max' => $CPLANET['temp_max'] . " °C",
 					'id_luna' => $CPLANET['id_luna'],
 				);
 
@@ -278,20 +309,26 @@ abstract class AbstractGamePage
 		}
 
 		// NOTE: add moon array inside planet array
+
 		foreach ($AllPlanets as $key => &$currentPlanet) {
-			if ($currentPlanet['id_luna'] == 0) {
+
+			if ($currentPlanet['id_luna'] == 0)
+			{
 				continue;
 			}
 
 			foreach ($AllMoons as $moon_key => $currentMoon) {
-				if ($currentMoon['id'] == $currentPlanet['id_luna']) {
+
+				if ($currentMoon['id'] == $currentPlanet['id_luna'])
+				{
 					$currentPlanet['moonInfo'][] = $currentMoon;
-				}else {
-					$currentPlanet['moonInfo'][] = array();
+					continue;
 				}
+
 			}
 
 		}
+		unset($currentPlanet);
 
 
 
@@ -322,7 +359,8 @@ abstract class AbstractGamePage
 			'servertime' => _date("M D d H:i:s", TIMESTAMP, $USER['timezone']),
 			'AllPlanets'				=> $AllPlanets,
 			'fleets'					=> $this->GetFleets(),
-			'show_fleets_active' => $USER['show_fleets_active']
+			'show_fleets_active' => $USER['show_fleets_active'],
+			'attackListenTime' => ATTACK_LISTEN_TIME,
 		));
 	}
 	protected function printMessage($message, $redirectButtons = NULL, $redirect = NULL, $fullSide = true)

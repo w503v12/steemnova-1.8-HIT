@@ -30,30 +30,35 @@
 	color: #ddd;
 }
 
-.tip{
-	display: none;
-	padding: 10px;
-	border: 1px solid #B63535;
-	position: fixed;
-	margin: auto;
-	background: #382F2F;
-	color: #f1f1f1;
-	top:20px;
+
+.layout,.footer{
+	min-width: 1200px;
+}
+.contentLeft{
+	min-width: 250px;
+}
+
+.contentRight{
+	min-width: 350px;
+}
+
+.contentMiddle{
+	min-width: 600px;
 }
 
 /*special scrollbar*/
 
 .scroll{
 	overflow:scroll;
-	overflow-x:hidden
 }
 
 .scroll::-webkit-scrollbar-track{
 	-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
-	background-color:#F5F5F5
+	background-color:transparent;
 }
 .scroll::-webkit-scrollbar{
-	width:10px;
+	width:4px;
+  height: 4px;
 	background-color:#F5F5F5
 }
 .scroll::-webkit-scrollbar-thumb{
@@ -237,7 +242,7 @@ input[type="radio"] {
 .color-white{
 	color: #fff!important;
 }
-.color-gray{
+.color-gray,.text-gray{
 	color: #ddd!important;
 }
 .color-green{
@@ -246,11 +251,14 @@ input[type="radio"] {
 .color-red,.text-red{
 	color:#e54438!important;
 }
-.color-blue{
+.color-blue,.text-blue{
 	color:#3d85c6!important;
 }
 .text-yellow,.color-yellow{
 	color:#ffd600!important;
+}
+.text-gow-gray{
+	color: #a79d9d!important;
 }
 .bg-black{
 	background: rgb(1,1,9);
@@ -262,6 +270,11 @@ input[type="radio"] {
 }
 .bg-light-black{
 	background-color: #222426;
+}
+
+.bg-hover-black:hover{
+	background-color: rgba(0,0,0,0.5);
+	transition: 0.5s ease;
 }
 
 .hover-pointer:hover{
@@ -316,8 +329,51 @@ input[type="radio"] {
 	background-color: #407eb6;
 }
 
+.message_0{
+	color:#FFFF00;
+}
+.message_1{
+	color: #ff6699;
+}
+.message_2{
+	color:#FF3300;
+}
+.message_3{
+	color:#FF9900;
+}
+.message_4{
+	color:#773399;
+}
+.message_5{
+	color:#009933;
+}
+.message_15{
+	color:#6495ed;
+}
+.message_50{
+	color:#666600;
+}
+.message_99{
+	color:#007070;
+}
+.message_100{
+	color:#ABABAB;
+}
+.message_999{
+	color:#CCCCCC;
+}
 /*--*/
 
+#tooltipNotify{
+	display: none;
+	padding: 10px;
+	border: 1px solid #B63535;
+	position: fixed;
+	margin: auto;
+	background: #382F2F;
+	color: #f1f1f1;
+	top:20px;
+}
 
 /*general fonts for font sizes*/
 table{
@@ -342,6 +398,11 @@ table{
 .table-gow button,.table-gow select,.table-gow input{
 	color: #ddd;
 }
+
+.table-gow th{
+	border: 1px solid #444444;
+}
+
 .font-size-12{
 	font-size: 12px;
 }

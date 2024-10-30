@@ -2,14 +2,26 @@
 {block name="title" prepend}{$LNG.lm_overview}{/block}
 {block name="content"}
 
+
+
 <script>
   function showNews(){
 
-    if ($('#newsRow').hasClass('d-none')) {
-      $('#newsRow').removeClass('d-none');
-    }else {
-      $('#newsRow').addClass('d-none');
-    }
+    $.ajax({
+        type: "POST",
+        url: 'game.php?page=overview&mode=changeNewsVisibility&ajax=1',
+        success: function(data)
+        {
+
+          if ($('#newsRow').hasClass('d-none')) {
+            $('#newsRow').removeClass('d-none')
+          }else {
+            $('#newsRow').addClass('d-none')
+          }
+
+        }
+
+    });
 
   }
 </script>
@@ -49,11 +61,11 @@
       </tr>
     {if !empty($news)}
       <tr>
-        <td class="text-center" colspan="3">
-          <button class="btn btn-dark py-0 px-1 border border-secondary fs-12 text-yellow" onclick="showNews();">Check News</button>
+        <td class="text-center">
+          <button class="btn btn-dark py-0 px-1 border border-secondary fs-12 text-yellow" onclick="showNews();">{$LNG.ov_news}</button>
         </td>
       </tr>
-      <tr id="newsRow" class="d-none">
+      <tr id="newsRow" class="{if $show_news_active}d-none{/if}">
         <td colspan="2">
           <table class="table table-gow fs-12">
             <thead>
@@ -112,6 +124,13 @@
                 <a class="hover-underline" href="game.php?page=galaxy&amp;galaxy={$galaxy}&amp;system={$system}">[{$galaxy}:{$system}:{$planet}]</a>
               </td>
             </tr>
+            {if  isModuleAvailable($smarty.const.MODULE_RELOCATE)}
+            <tr >
+              <td colspan="2" class="text-center">
+                <a class="btn btn-dark py-0 px-1 border border-secondary fs-12 text-yellow" href="game.php?page=relocate">{$LNG.rl_relocate}</a>
+              </td>
+            </tr>
+            {/if}
           </tbody>
         </table>
       </td>
